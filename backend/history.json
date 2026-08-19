@@ -1,0 +1,58 @@
+[
+  {
+    "text": "今天的风很轻，适合把脑海里的想法慢慢写下来。",
+    "score": 1.0,
+    "label": "偏积极",
+    "pinyin": "jīn tiān de fēng hěn qīng ， shì hé bǎ nǎo hǎi lǐ de xiǎng fǎ màn màn xiě xià lái 。",
+    "created_at": "2026-08-19T06:19:18+00:00"
+  },
+  {
+    "text": "我很伤心",
+    "score": 0.71,
+    "label": "偏积极",
+    "pinyin": "wǒ hěn shāng xīn",
+    "created_at": "2026-08-19T06:19:34+00:00"
+  },
+  {
+    "text": "我好伤心",
+    "score": 0.55,
+    "label": "中性",
+    "pinyin": "wǒ hǎo shāng xīn",
+    "created_at": "2026-08-19T06:19:47+00:00"
+  },
+  {
+    "text": "我好伤心",
+    "score": 0.55,
+    "label": "中性",
+    "pinyin": "wǒ hǎo shāng xīn",
+    "created_at": "2026-08-19T06:19:48+00:00"
+  },
+  {
+    "text": "我好伤心",
+    "score": 0.55,
+    "label": "中性",
+    "pinyin": "wǒ hǎo shāng xīn",
+    "created_at": "2026-08-19T06:19:48+00:00"
+  },
+  {
+    "text": "我好伤心",
+    "score": 0.55,
+    "label": "中性",
+    "pinyin": "wǒ hǎo shāng xīn",
+    "created_at": "2026-08-19T06:19:48+00:00"
+  },
+  {
+    "text": "我好伤心",
+    "score": 0.55,
+    "label": "中性",
+    "pinyin": "wǒ hǎo shāng xīn",
+    "created_at": "2026-08-19T06:19:48+00:00"
+  },
+  {
+    "text": "你在干嘛",
+    "score": 0.25,
+    "label": "偏消极",
+    "pinyin": "nǐ zài gàn má",
+    "created_at": "2026-08-19T06:19:59+00:00"
+  }
+]

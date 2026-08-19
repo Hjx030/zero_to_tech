@@ -1,6 +1,12 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+from pypinyin import lazy_pinyin, Style
+from snownlp import SnowNLP
+
+import json
+from datetime import datetime, timezone
+
 
 app = FastAPI()
 
@@ -8,6 +14,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],
     allow_methods=["GET", "POST"],
+    allow_headers=["*"]
 )
 
 profile = {
@@ -28,15 +35,55 @@ profile = {
 class AnalyzeRequest(BaseModel):
     text: str
 
+@app.get("/")
+def root():
+    return {
+        "message": "backend is running",
+        "docs": "http://127.0.0.1:8000/docs"
+    }
 @app.get("/api/profile")
 def get_profile():
     return profile
 
+HISTORY_FILE = "history.json"
+
+def load_history():
+    try:
+        with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return []
+
+def save_record(record):
+    records = load_history()
+    records.append(record)
+    with open(HISTORY_FILE, "w", encoding="utf-8") as f:
+        json.dump(records, f, ensure_ascii=False, indent=2)
+
+def score_label(score):
+    if score >= 0.6:
+        return "偏积极"
+    elif score <= 0.4:
+        return "偏消极"
+    else:
+        return "中性"
+  
 @app.post("/api/analyze")
 def analyze(req: AnalyzeRequest):
-    return {
-        "text": req.text,
-        "score": 0.5,
-        "label": "偏平静",
-        "pinyin": "（模块 6 再说）",
+    text = req.text
+    score = round(SnowNLP(text).sentiments, 2)
+    result = {
+        "text": text,
+        "score": score,
+        "label": score_label(score),
+        "pinyin": " ".join(lazy_pinyin(text, style=Style.TONE)),
+        "created_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),  # ← 新增
     }
+    save_record(result)                                                          # ← 存档到文件
+    return result
+
+@app.get("/api/history")
+def history():
+    records = load_history()
+    records.reverse()          # 倒过来：新的排前面
+    return records[:10]        # 切一刀：只留最近 10 条
